@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:32:44 by mugenan           #+#    #+#             */
-/*   Updated: 2025/04/29 20:29:58 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/11 03:48:38 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
+#include <lib.h>
 
-
+void    ft_take_arg(char **av);
 
 #endif

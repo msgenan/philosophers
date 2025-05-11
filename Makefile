@@ -1,17 +1,19 @@
 NAME = philo
 SRCS = ./srcs/philo.c \
+		./srcs/arg.c \
 
 CC = cc
 BUILD_DIR = build
 CFLAGS = -Wall -Wextra -Werror
 LIB_PATH = library
+İNCLUDE = -I./library -I./srcs
 LIB = $(LIB_PATH)/library.a
 OBJS = $(SRCS:./src/%.c=$(BUILD_DIR)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(İNCLUDE) $(OBJS) -o $(NAME)
 	@echo "✅ Build completed."
 
 $(BUILD_DIR)/%.o: ./src/%.c

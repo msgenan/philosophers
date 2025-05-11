@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 18:44:02 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/11 03:49:51 by mugenan          ###   ########.fr       */
+/*   Created: 2025/05/11 03:14:24 by mugenan           #+#    #+#             */
+/*   Updated: 2025/05/11 03:17:52 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include "lib.h"
 
-# include <stdlib.h>
-# include <unistd.h>
+int ft_issdigit(char *str)
+{
+	int i;
 
-
-int ft_issdigit(char *str);
-int	ft_atoi(const char *str);
-
-
-#endif
+	i = 0;
+	while(str[i])
+	{
+		if(str[i] >= 0 && str[i] <= 9)
+			return(0);
+		i++;
+	}
+	return(1);
+}

@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   arg.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 18:44:02 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/11 03:49:51 by mugenan          ###   ########.fr       */
+/*   Created: 2025/05/11 03:21:52 by mugenan           #+#    #+#             */
+/*   Updated: 2025/05/11 03:53:20 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include <philo.h>
 
-# include <stdlib.h>
-# include <unistd.h>
+void    ft_take_arg(char **av)
+{
+    int i;
 
+    i = 1;
+    while(av[i])
+    {
+        if(!((ft_atoi(av[i]) != 0 || av[i] == 0) &&
+            (ft_issdigit(av[i]) == 1)))
+            exit(1);
+        i++;
+    }
+}
 
-int ft_issdigit(char *str);
-int	ft_atoi(const char *str);
-
-
-#endif
+//push_swap argüman alma işlemlerinden yardım al
