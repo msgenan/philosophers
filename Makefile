@@ -6,14 +6,13 @@ CC = cc
 BUILD_DIR = build
 CFLAGS = -Wall -Wextra -Werror
 LIB_PATH = library
-İNCLUDE = -I./library -I./srcs
-LIB = $(LIB_PATH)/library.a
+LIB = $(LIB_PATH)/lib.a
 OBJS = $(SRCS:./src/%.c=$(BUILD_DIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(İNCLUDE) $(OBJS) -o $(NAME)
+$(NAME): $(LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
 	@echo "✅ Build completed."
 
 $(BUILD_DIR)/%.o: ./src/%.c

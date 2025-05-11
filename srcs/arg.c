@@ -6,24 +6,27 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 03:21:52 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/11 03:53:20 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/11 15:12:00 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philo.h>
+#include "philo.h"
 
 void    ft_take_arg(char **av)
 {
     int i;
-
+    int num;
+    
     i = 1;
     while(av[i])
     {
-        if(!((ft_atoi(av[i]) != 0 || av[i] == 0) &&
-            (ft_issdigit(av[i]) == 1)))
-            exit(1);
+        num = ft_atoi(av[i]);
+        if(!(num != 0 || av[i] == 0))
+            printf("argument is incorrect!\n");
+        else if(num > 2147483647)
+            printf("argument is over max_int!\n");
+        else if(!ft_issdigit(av[i]))
+            printf("argument has a char!\n");
         i++;
     }
 }
-
-//push_swap argüman alma işlemlerinden yardım al

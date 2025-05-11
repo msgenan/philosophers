@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 03:14:24 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/11 03:17:52 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/11 15:11:14 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int ft_issdigit(char *str)
 	i = 0;
 	while(str[i])
 	{
-		if(str[i] >= 0 && str[i] <= 9)
+		if(!(str[i] >= '0' && str[i] <= '9'))
 			return(0);
 		i++;
 	}
