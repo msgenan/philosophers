@@ -1,6 +1,6 @@
 NAME = philo
 SRCS = ./srcs/philo.c \
-		./srcs/arg.c \
+		./srcs/initialize.c \
 
 CC = cc
 BUILD_DIR = build
