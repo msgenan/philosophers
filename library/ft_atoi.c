@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 03:13:28 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/11 03:13:42 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/15 01:29:14 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	ft_atoi(const char *str)
 {
 	int	i;
-	int	result;
 	int	sign;
+	size_t	result;
 
 	result = 0;
 	sign = 1;
@@ -32,6 +32,8 @@ int	ft_atoi(const char *str)
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		result = (result * 10) + (str[i++] - 48);
+		if(result > 2147483647)
+			return(0);
 	}
 	if (result)
 		return (result * sign);
