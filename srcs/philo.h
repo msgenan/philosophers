@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:32:44 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/15 03:53:00 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:49:03 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ typedef struct s_mutex
 }              t_mutex;
 
 
+int     ft_erorr(char *str);
 size_t	ft_get_time_of_day(void);
 int     ft_check_args(int ac, char **av);
-void	ft_init_threads(t_data *data, pthread_t *threads);
-void	ft_init_args(int ac, char **av, t_data *data);
-void	ft_init_philos(t_data *data, t_data *philos);
+int     ft_init_philos(t_data *data, t_data *philos);
+int     ft_init_args(int ac, char **av, t_data *data);
+int     ft_init_mutex(t_mutex *mutex, int nbr_of_philos);
+int     ft_init_threads(t_data *data, pthread_t *threads);
 
 #endif
