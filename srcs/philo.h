@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:32:44 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/19 17:49:03 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/19 19:49:02 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,22 @@
 
 typedef struct s_data
 {
+    size_t  time;
+    int nbr_of_philos;
+    int time_to_die;
+    int time_to_eat;
+    int time_to_sleep;
+    int must_eat_number;
+    int is_any_dead;
+    t_philo *philos;
+    pthread_t *threads;
+    pthread_mutex_t	*forks;
+    pthread_mutex_t print;
+    pthread_mutex_t log;
+}              t_data;
+
+typedef struct s_philo
+{
     int id;
     size_t  time;
     int nbr_of_philos;
@@ -29,23 +45,18 @@ typedef struct s_data
     int time_to_sleep;
     int must_eat_number;
     int is_any_dead;
-    
-}              t_data;
-
-typedef struct s_mutex
-{
-    pthread_mutex_t	*forks;
-    pthread_mutex_t print;
-    pthread_mutex_t log;
-}              t_mutex;
-
+}               t_philo;
 
 int     ft_erorr(char *str);
 size_t	ft_get_time_of_day(void);
 int     ft_check_args(int ac, char **av);
-int     ft_init_philos(t_data *data, t_data *philos);
+
+
 int     ft_init_args(int ac, char **av, t_data *data);
-int     ft_init_mutex(t_mutex *mutex, int nbr_of_philos);
-int     ft_init_threads(t_data *data, pthread_t *threads);
+int     ft_init_philos(t_data *data);
+int     ft_init_mutex(t_data *data);
+int     ft_init_threads(t_data *data);
+
+
 
 #endif
