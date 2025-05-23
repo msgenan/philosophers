@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:28:19 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/19 19:49:11 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/23 22:29:30 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_erorr(char *str)
 	printf("Erorr: %s\n", str);
 	return(1);
 }
+
 int	ft_check_args(int ac, char **av)
 {
 	int i;
@@ -41,9 +42,9 @@ int main(int ac, char **av)
 		return(EXIT_FAILURE);
 	if(ft_init_args(ac, av, &data))
 		return(EXIT_FAILURE);
-	if(ft_init_philos(&data))
-		return(EXIT_FAILURE);
 	if(ft_init_mutex(&data))
+		return(EXIT_FAILURE);
+	if(ft_init_philos(&data))
 		return(EXIT_FAILURE);
 	if(ft_init_threads(&data))
 		return(EXIT_FAILURE);
