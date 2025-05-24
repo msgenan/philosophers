@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:28:19 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/23 22:29:30 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/24 21:43:03 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ int main(int ac, char **av)
 		return(EXIT_FAILURE);
 	if(ft_init_threads(&data))
 		return(EXIT_FAILURE);
+	
 }

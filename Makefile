@@ -1,9 +1,11 @@
 NAME = philo
 SRCS = ./srcs/philo.c \
 		./srcs/initialize.c \
+		./srcs/actions.c \
+		./srcs/threads.c \
 
 CC = cc
-BUILD_DIR = build
+BUILD_DIR = ./src/build
 CFLAGS = -Wall -Wextra -Werror
 LIB_PATH = library
 LIB = $(LIB_PATH)/lib.a
