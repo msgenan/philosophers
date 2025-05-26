@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 03:21:52 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/24 21:35:23 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:15:26 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ size_t	ft_get_time_of_day(void)
 
 int	ft_init_args(int ac, char **av, t_data *data)
 {
-	data->nbr_of_philos = ft_atoi(av[1]);
+	data->dead_id = -1;
+	data->end_of_sim = 0;
+	data->total_eaten = 0;
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
+	data->nbr_of_philos = ft_atoi(av[1]);
 	data->time_to_sleep = ft_atoi(av[4]);
 	data->time = ft_get_time_of_day();
-	data->is_someone_dead = -1;
-	data->must_eat = 0;
 	if(ac == 5)
 		data->must_eat_count = -1;
 	else
@@ -50,7 +51,7 @@ int	ft_init_mutex(t_data *data)
 		ft_erorr("Mutex initialize fail!");
 		i++;
 	}
-	if	(pthread_mutex_init(&data->log, NULL) != 0)
+	if	(pthread_mutex_init(&data->lock, NULL) != 0)
 		ft_erorr("Mutex initialize fail!");
 	if	(pthread_mutex_init(&data->print, NULL) != 0)
 		ft_erorr("Mutex initialize fail!");
@@ -70,14 +71,16 @@ int	ft_init_philos(t_data *data)
 	while (i < data->nbr_of_philos)
 	{
 		data->philos[i].id = i;
-		data->philos[i].nbr_of_philos = data->nbr_of_philos;
+		data->philos[i].meals_eaten = 0;
+		data->philos[i].is_philo_dead = 0;
+		data->philos[i].right_fork = data->forks[i];
+		data->philos[i].time = ft_get_time_of_day();
 		data->philos[i].time_to_die = data->time_to_die;
 		data->philos[i].time_to_eat = data->time_to_eat;
+		data->philos[i].nbr_of_philos = data->nbr_of_philos;
 		data->philos[i].time_to_sleep = data->time_to_sleep;
-		data->philos[i].meals_eaten = 0;
-		data->philos[i].time = ft_get_time_of_day();
 		data->philos[i].last_eat_time = data->philos[i].time;
-		data->philos[i].right_fork = data->forks[i];
+		data->philos[i].must_eat_count = data->must_eat_count;
 		data->philos[i].left_fork = data->forks[(i + 1) % data->nbr_of_philos];
 		data->philos[i].data = data;
 		i++;
@@ -101,13 +104,7 @@ int	ft_init_threads(t_data *data)
 	}
 	if (pthread_create(&monitor_thread, NULL, ft_monitor_routine, (void *)data) != 0)
 		ft_erorr("Thread initialize fail!");
-	i = -1;
-	while (++i < data->nbr_of_philos)
-	{
-		if (pthread_join(data->threads[i], NULL) != 0)
-			ft_erorr("Thread join fail!");
-	}
-	if (pthread_join(monitor_thread, NULL) != 0)
-		ft_erorr("Monitor thread join fail!");
+	if(pthread_join(monitor_thread, NULL) != 0)
+		ft_erorr("Thread join fail!");
 	return(0);
 }

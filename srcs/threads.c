@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:03:57 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/24 22:25:27 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/26 21:23:45 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,11 @@ void    *ft_threads_routine(void *arg)
     
     philo = (t_philo *)arg;
     data = philo->data;
-    while (ft_check_routine(philo->data))
+    while (1)
     {
         ft_action_fork(philo);
         ft_action_eat(philo);
         ft_action_sleep(philo);
-        if(ft_get_time_of_day() - philo->last_eat_time >
-            philo->time_to_die)
-            data->is_someone_dead = philo->id;
-        if(philo->meals_eaten == data->must_eat_count)
-            data->must_eat = 1;
     }
     return (NULL);
 }
@@ -36,27 +31,29 @@ void    *ft_threads_routine(void *arg)
 void *ft_monitor_routine(void *arg)
 {
     t_data *data;
+    int i;
 
     data = (t_data *)arg;
-    while (1)
+    i = -1;
+    while (++i < data->nbr_of_philos)
     {
-        if(ft_check_routine(data))
+        if(ft_get_time_of_day() - data->philos[i].last_eat_time > data->philos[i].time_to_die)
         {
-            if(data->is_someone_dead != -1)
-                ft_print_action(data, data->is_someone_dead, "died");
+            ft_print_action(data, i, "is dead");
+            data->philos[i].data->end_of_sim = 1;
+            ft_destroy_threads(data);
             ft_destroy_mutex(data);
             return(NULL);
         }
+        if(data->total_eaten == data->must_eat_count)
+        {
+            data->end_of_sim = 1;
+            ft_destroy_threads(data);
+            ft_destroy_mutex(data);
+            return(0);
+        }
     }
-}
-
-int ft_check_routine(t_data *data)
-{
-    if (data->is_someone_dead != -1)
-        return (1);
-    if (data->must_eat == 1)
-        return (1);
-    return (0);
+    return(NULL);
 }
 
 void    ft_destroy_mutex(t_data *data)
@@ -65,9 +62,26 @@ void    ft_destroy_mutex(t_data *data)
 
     i = -1;
     while (++i < data->nbr_of_philos)
+    {
+        pthread_mutex_unlock(&data->forks[i]);
         pthread_mutex_destroy(&data->forks[i]);
+    }
+    pthread_mutex_unlock(&data->eat);
+    pthread_mutex_unlock(&data->lock);
+    pthread_mutex_unlock(&data->print);
     pthread_mutex_destroy(&data->print);
     pthread_mutex_destroy(&data->eat);
-    pthread_mutex_destroy(&data->log);
+    pthread_mutex_destroy(&data->lock);
     free(data->forks);
+}
+
+void    ft_destroy_threads(t_data *data)
+{
+    int i;
+    i = -1;
+	while (++i < data->nbr_of_philos)
+	{
+		if (pthread_join(data->threads[i], NULL) != 0)
+			ft_erorr("Thread join fail!");
+	}
 }
