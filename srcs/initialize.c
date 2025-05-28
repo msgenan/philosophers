@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 03:21:52 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/26 20:15:26 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/28 21:56:32 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ int	ft_init_threads(t_data *data)
 	while (++i < data->nbr_of_philos)
 	{
 		if (pthread_create(&data->threads[i], NULL, ft_threads_routine, (void *)&data->philos[i]) != 0)
-			ft_erorr("Thread initialize fail!");		
+			ft_erorr("Thread initialize fail!");
 	}
 	if (pthread_create(&monitor_thread, NULL, ft_monitor_routine, (void *)data) != 0)
 		ft_erorr("Thread initialize fail!");
-	if(pthread_join(monitor_thread, NULL) != 0)
+	if (pthread_join(monitor_thread, NULL) != 0)
 		ft_erorr("Thread join fail!");
 	return(0);
 }

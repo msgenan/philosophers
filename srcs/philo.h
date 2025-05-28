@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:32:44 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/26 21:25:28 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/28 20:42:21 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ typedef struct s_philo
 int     ft_erorr(char *str);
 size_t	ft_get_time_of_day(void);
 int     ft_check_args(int ac, char **av);
-int     ft_routine_control(t_philo *philo);
+int     ft_check_end_of_sim(t_philo *philo);
+int     ft_end_of_sim(t_data *data);
+void	ft_usleep(size_t wait_time);
 void    ft_destroy_mutex(t_data *data);
 void    ft_destroy_threads(t_data *data);
 

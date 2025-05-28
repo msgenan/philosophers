@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:03:57 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/26 21:23:45 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/28 22:01:25 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    *ft_threads_routine(void *arg)
     
     philo = (t_philo *)arg;
     data = philo->data;
-    while (1)
+    while (!ft_end_of_sim(data))
     {
         ft_action_fork(philo);
         ft_action_eat(philo);
@@ -34,26 +34,66 @@ void *ft_monitor_routine(void *arg)
     int i;
 
     data = (t_data *)arg;
-    i = -1;
-    while (++i < data->nbr_of_philos)
+    while(!ft_end_of_sim(data))
     {
-        if(ft_get_time_of_day() - data->philos[i].last_eat_time > data->philos[i].time_to_die)
+        i = -1;
+        while(++i < data->nbr_of_philos)
         {
-            ft_print_action(data, i, "is dead");
-            data->philos[i].data->end_of_sim = 1;
-            ft_destroy_threads(data);
-            ft_destroy_mutex(data);
-            return(NULL);
-        }
-        if(data->total_eaten == data->must_eat_count)
-        {
-            data->end_of_sim = 1;
-            ft_destroy_threads(data);
-            ft_destroy_mutex(data);
-            return(0);
+            
+            if(ft_check_end_of_sim(&data->philos[i]))
+            {
+                ft_destroy_mutex(data);
+                ft_destroy_threads(data);
+                return(NULL);
+            }
         }
     }
+    if(ft_end_of_sim(data))
+    {
+        ft_destroy_mutex(data);
+        ft_destroy_threads(data);
+    }
     return(NULL);
+}
+int ft_check_end_of_sim(t_philo *philo)
+{
+    if(ft_get_time_of_day() - philo->last_eat_time > philo->time_to_die)
+    {
+        ft_print_action(philo->data, philo->id, "is dead");
+        pthread_mutex_lock(&philo->data->lock);
+        philo->data->end_of_sim = 1;
+        pthread_mutex_unlock(&philo->data->lock);
+        return(1);
+    }
+    if(philo->data->total_eaten == philo->data->must_eat_count)
+    {
+        pthread_mutex_lock(&philo->data->lock);
+        philo->data->end_of_sim = 1;
+        pthread_mutex_unlock(&philo->data->lock);
+        return(1);
+    }
+    return(0);
+}
+
+int ft_end_of_sim(t_data *data)
+{
+    pthread_mutex_lock(&data->lock);
+    if(data->end_of_sim == 1)
+    {
+        pthread_mutex_unlock(&data->lock);
+        return(1);
+    }
+    pthread_mutex_unlock(&data->lock);
+    return(0);
+}
+
+void	ft_usleep(size_t wait_time)
+{
+	size_t	start;
+
+	start = ft_get_time_of_day();
+	while ((ft_get_time_of_day() - start) < wait_time)
+		usleep(500);
 }
 
 void    ft_destroy_mutex(t_data *data)
@@ -62,13 +102,8 @@ void    ft_destroy_mutex(t_data *data)
 
     i = -1;
     while (++i < data->nbr_of_philos)
-    {
-        pthread_mutex_unlock(&data->forks[i]);
         pthread_mutex_destroy(&data->forks[i]);
-    }
-    pthread_mutex_unlock(&data->eat);
-    pthread_mutex_unlock(&data->lock);
-    pthread_mutex_unlock(&data->print);
+
     pthread_mutex_destroy(&data->print);
     pthread_mutex_destroy(&data->eat);
     pthread_mutex_destroy(&data->lock);
