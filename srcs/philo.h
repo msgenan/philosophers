@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:32:44 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/28 20:42:21 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/29 19:30:22 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ typedef struct s_data
     t_philo *philos;
     pthread_t *threads;
     pthread_mutex_t eat;
+    pthread_mutex_t eaten;
     pthread_mutex_t lock;
     pthread_mutex_t print;
     pthread_mutex_t	*forks;
+    pthread_mutex_t time_lock;
 }              t_data;
 
 typedef struct s_philo
@@ -53,19 +55,19 @@ typedef struct s_philo
     size_t  time;
     size_t time_to_die;
     size_t  last_eat_time;
-    pthread_mutex_t left_fork;
-    pthread_mutex_t right_fork;
+    pthread_mutex_t *left_fork;
+    pthread_mutex_t *right_fork;
     t_data *data;
 }               t_philo;
 
 int     ft_erorr(char *str);
 size_t	ft_get_time_of_day(void);
 int     ft_check_args(int ac, char **av);
-int     ft_check_end_of_sim(t_philo *philo);
-int     ft_end_of_sim(t_data *data);
 void	ft_usleep(size_t wait_time);
-void    ft_destroy_mutex(t_data *data);
-void    ft_destroy_threads(t_data *data);
+int ft_is_any_dead(t_data *data);
+void    ft_end_of_sim(t_data *data);
+int ft_is_philos_eat_enough(t_data *data);
+int ft_is_philo_starve(t_philo *philo);
 
 /* initialize.c */
 int     ft_init_args(int ac, char **av, t_data *data);
@@ -81,6 +83,7 @@ void *ft_monitor_routine(void    *arg);
 void    ft_action_fork(t_philo *philo);
 void    ft_action_eat(t_philo *philo);
 void    ft_action_sleep(t_philo *philo);
+void    ft_action_think(t_philo *philo);
 void    ft_print_action(t_data *data, int id, char *str);
 
 #endif

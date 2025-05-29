@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 03:21:52 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/28 21:56:32 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:47:36 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	ft_init_mutex(t_data *data)
 		ft_erorr("Mutex initialize fail!");
 	if	(pthread_mutex_init(&data->eat, NULL) != 0)
 		ft_erorr("Mutex initialize fail!");
+	if	(pthread_mutex_init(&data->eaten, NULL) != 0)
+		ft_erorr("Mutex initialize fail!");
 	return(0);
 }
 
@@ -73,7 +75,6 @@ int	ft_init_philos(t_data *data)
 		data->philos[i].id = i;
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].is_philo_dead = 0;
-		data->philos[i].right_fork = data->forks[i];
 		data->philos[i].time = ft_get_time_of_day();
 		data->philos[i].time_to_die = data->time_to_die;
 		data->philos[i].time_to_eat = data->time_to_eat;
@@ -81,7 +82,8 @@ int	ft_init_philos(t_data *data)
 		data->philos[i].time_to_sleep = data->time_to_sleep;
 		data->philos[i].last_eat_time = data->philos[i].time;
 		data->philos[i].must_eat_count = data->must_eat_count;
-		data->philos[i].left_fork = data->forks[(i + 1) % data->nbr_of_philos];
+		data->philos[i].right_fork = &data->forks[i];
+		data->philos[i].left_fork = &data->forks[(i + 1) % data->nbr_of_philos];
 		data->philos[i].data = data;
 		i++;
 	}
