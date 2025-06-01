@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fxc <fxc@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:32:44 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/29 19:30:22 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/06/02 00:49:53 by fxc              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ typedef struct s_philo t_philo;
 
 typedef struct s_data
 {
-    int dead_id;
     int end_of_sim;
-    int total_eaten;
-    int time_to_die;
+    size_t time_to_die;
     int time_to_eat;
     int nbr_of_philos;
     int time_to_sleep;
@@ -35,8 +33,8 @@ typedef struct s_data
     size_t  time;
     t_philo *philos;
     pthread_t *threads;
+    pthread_t monitor_thread;
     pthread_mutex_t eat;
-    pthread_mutex_t eaten;
     pthread_mutex_t lock;
     pthread_mutex_t print;
     pthread_mutex_t	*forks;
@@ -48,12 +46,11 @@ typedef struct s_philo
     int id;
     int time_to_eat;
     int meals_eaten;
+    size_t time_to_die;
     int time_to_sleep;
     int nbr_of_philos;
     int must_eat_count;
-    int is_philo_dead;
     size_t  time;
-    size_t time_to_die;
     size_t  last_eat_time;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
@@ -61,13 +58,13 @@ typedef struct s_philo
 }               t_philo;
 
 int     ft_erorr(char *str);
-size_t	ft_get_time_of_day(void);
+int     ft_end_of_sim(t_data *data);
+int     ft_is_sim_end(t_data *data);
+int     ft_check_all_ate(t_data *data);
 int     ft_check_args(int ac, char **av);
 void	ft_usleep(size_t wait_time);
-int ft_is_any_dead(t_data *data);
-void    ft_end_of_sim(t_data *data);
-int ft_is_philos_eat_enough(t_data *data);
-int ft_is_philo_starve(t_philo *philo);
+size_t	ft_get_time_of_day(void);
+
 
 /* initialize.c */
 int     ft_init_args(int ac, char **av, t_data *data);

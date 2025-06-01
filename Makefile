@@ -6,7 +6,7 @@ SRCS = ./srcs/philo.c \
 
 CC = cc
 BUILD_DIR = ./src/build
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 LIB_PATH = library
 LIB = $(LIB_PATH)/lib.a
 OBJS = $(SRCS:./src/%.c=$(BUILD_DIR)/%.o)

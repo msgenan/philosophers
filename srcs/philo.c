@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fxc <fxc@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:28:19 by mugenan           #+#    #+#             */
-/*   Updated: 2025/05/29 16:40:18 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/06/02 00:49:11 by fxc              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,7 @@ int main(int ac, char **av)
 		return(EXIT_FAILURE);
 	if(ft_init_threads(&data))
 		return(EXIT_FAILURE);
+	if(ft_end_of_sim(&data))
+		return(EXIT_FAILURE);
+	return(EXIT_SUCCESS);
 }
