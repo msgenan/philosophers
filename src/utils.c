@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:26:17 by mugenan           #+#    #+#             */
-/*   Updated: 2025/06/02 14:06:14 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:45:19 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_usleep(size_t wait_time, t_data *data)
 	{
 		if (ft_is_sim_end(data))
 			break ;
-		usleep(500);
+		usleep(100);
 	}
 }
 

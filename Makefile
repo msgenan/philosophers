@@ -7,7 +7,7 @@ SRCS = ./src/philo.c \
 
 CC = cc
 BUILD_DIR = build
-CFLAGS = -Wall -Wextra -Werror -Iinclude -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 OBJS = $(SRCS:./src/%.c=$(BUILD_DIR)/%.o)
 
 all: $(NAME)

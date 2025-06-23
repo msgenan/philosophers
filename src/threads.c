@@ -6,7 +6,7 @@
 /*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:03:57 by mugenan           #+#    #+#             */
-/*   Updated: 2025/06/02 15:36:45 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:31:33 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	*ft_monitor_routine(void *arg)
 			if (ft_get_time_of_day() - data->philos[i].last_eat_time
 				> data->philos[i].time_to_die)
 			{
-				ft_print_action(data, i, "is dead");
 				pthread_mutex_unlock(&data->eat);
+				ft_print_action(data, i, "is dead");
 				ft_set_end_of_sim(data);
 				return (NULL);
 			}
@@ -87,11 +87,14 @@ int	ft_check_all_ate(t_data *data)
 		return (0);
 	while (++i < data->nbr_of_philos)
 	{
+		pthread_mutex_lock(&data->eat);
 		if (data->philos[i].meals_eaten < data->must_eat_count)
 		{
 			all_ate = 0;
+			pthread_mutex_unlock(&data->eat);
 			break ;
 		}
+		pthread_mutex_unlock(&data->eat);
 	}
 	if (data->must_eat_count != -1 && all_ate)
 	{
