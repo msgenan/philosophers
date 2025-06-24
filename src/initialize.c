@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fxc <fxc@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 03:21:52 by mugenan           #+#    #+#             */
-/*   Updated: 2025/06/23 17:44:16 by mugenan          ###   ########.fr       */
+/*   Updated: 2025/06/24 17:40:11 by fxc              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int	ft_init_threads(t_data *data)
 				&data->threads[i], NULL,
 				ft_threads_routine, (void *)&data->philos[i]) != 0)
 			ft_erorr("Thread initialize fail!");
-		if(i % 2 == 0)
-			usleep(1000);
 	}
 	if (pthread_create(
 			&data->monitor_thread, NULL,
