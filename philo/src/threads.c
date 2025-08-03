@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fxc <fxc@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mugenan <mugenan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:03:57 by mugenan           #+#    #+#             */
-/*   Updated: 2025/06/24 17:43:08 by fxc              ###   ########.fr       */
+/*   Updated: 2025/08/03 20:06:15 by mugenan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ void	*ft_monitor_routine(void *arg)
 		i = -1;
 		while (++i < data->nbr_of_philos)
 		{
+			pthread_mutex_lock(&data->eat);
 			if (ft_get_time_of_day() - data->philos[i].last_eat_time
 				> data->philos[i].time_to_die)
 			{
+				pthread_mutex_unlock(&data->eat);
 				ft_print_action(data, i, "is dead");
 				ft_set_end_of_sim(data);
 				return (NULL);
 			}
+			pthread_mutex_unlock(&data->eat);
 		}
 		if (ft_check_all_ate(data))
 			break ;

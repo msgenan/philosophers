@@ -1,14 +1,16 @@
 NAME = philo
+
 SRCS = ./src/philo.c \
-		./src/initialize.c \
-		./src/actions.c \
-		./src/threads.c \
-		./src/utils.c \
+       ./src/initialize.c \
+       ./src/actions.c \
+       ./src/threads.c \
+       ./src/utils.c
+
+OBJS = $(SRCS:./src/%.c=build/%.o)
 
 CC = cc
+CFLAGS = -Wall -Wextra -Werror -I./include
 BUILD_DIR = build
-CFLAGS = -Wall -Wextra -Werror -Iinclude
-OBJS = $(SRCS:./src/%.c=$(BUILD_DIR)/%.o)
 
 all: $(NAME)
 
@@ -27,7 +29,7 @@ clean:
 	@echo "🗑️  Object files removed."
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -f $(NAME)
 	@echo "🗑️  Executable removed."
 
 re: fclean all
